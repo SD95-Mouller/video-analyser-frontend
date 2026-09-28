@@ -15,7 +15,8 @@ export default function App() {
       return;
     }
     setLoading(true);
-    const response = await fetch('https://http://127.0.0.1:8000/v1/video/analyze', {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/v1/video/analyze', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,9 +25,25 @@ export default function App() {
       body: JSON.stringify({ video_url: videourl.trim() })
     });
 
-    const result = await response.json();
-    setSummary(result.data.summary);
+      const result = await response.json();
+      if(!response.ok||result.code !== 200) 
+      {
+        alert('分析视频失败，请检查API Key和视频链接是否正确');
+      }
+      else
+      {
+        setSummary(result.data.summary);
+      }
+    } 
+
+    catch (error) {
+      console.error('Error analyzing video:', error);
+      alert('分析视频时出错');
+    }
+
+    finally {
     setLoading(false);
+    }
   }
 
   return (
