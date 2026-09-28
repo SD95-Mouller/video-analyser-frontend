@@ -9,7 +9,7 @@ export default function App() {
 
   async function handleAnalyzeVideo() 
   {
-    if (!apiKey || !videourl) 
+    if (!apiKey.trim() || !videourl.trim()) 
     {
       alert('请填写API Key和视频链接');
       return;
@@ -19,14 +19,14 @@ export default function App() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'Authorization': `Bearer ${apiKey.trim()}`
       },
-      body: JSON.stringify({ video_url: videourl })
+      body: JSON.stringify({ video_url: videourl.trim() })
     });
 
     const result = await response.json();
     setSummary(result.data.summary);
-    setLoading(false);``
+    setLoading(false);
   }
 
   return (
