@@ -5,6 +5,7 @@ export default function App() {
   const [summary, setSummary] = useState('这里将显示视频内容总结');
   const [apiKey, setApiKey] = useState('');
   const [videourl, setVideourl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function handleAnalyzeVideo() 
   {
@@ -13,6 +14,7 @@ export default function App() {
       alert('请填写API Key和视频链接');
       return;
     }
+    setLoading(true);
     const response = await fetch('https://http://127.0.0.1:8000/v1/video/analyze', {
       method: 'POST',
       headers: {
@@ -24,6 +26,7 @@ export default function App() {
 
     const result = await response.json();
     setSummary(result.data.summary);
+    setLoading(false);``
   }
 
   return (
@@ -45,8 +48,9 @@ export default function App() {
         <button className="form-button" 
                 id="analyze-button"
                 onClick={handleAnalyzeVideo}
+                disabled={loading}
         >
-          开始分析视频
+          {loading ? '分析中...' : '分析视频'}
         </button>
       </div>
 
