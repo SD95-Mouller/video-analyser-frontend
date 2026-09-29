@@ -7,6 +7,10 @@ export default function App() {
   const [videourl, setVideourl] = useState('');
   const [loading, setLoading] = useState(false);
 
+
+  const Mock=true;
+
+
   async function handleAnalyzeVideo() 
   {
     if (!apiKey.trim() || !videourl.trim()) 
@@ -15,7 +19,24 @@ export default function App() {
       return;
     }
     setLoading(true);
+
+
     try {
+      if(Mock)
+      {
+        setTimeout(() => {
+          setSummary(`
+            这是一个模拟的视频内容总结
+          1. 视频介绍了如何使用React进行前端开发。
+          2. 视频中展示了组件的创建和状态管理。
+          3. 视频还讲解了如何与后端API进行交互。
+          4. 最后，视频提供了一些优化性能的技巧。
+            `);
+          setLoading(false);
+        }, 5000);
+        return;
+      }
+
       const response = await fetch('http://127.0.0.1:8000/v1/video/analyze', {
       method: 'POST',
       headers: {
@@ -36,13 +57,15 @@ export default function App() {
       }
     } 
 
-    catch (error) {
+    catch (error) 
+    {
       console.error('Error analyzing video:', error);
       alert('分析视频时出错');
     }
 
-    finally {
-    setLoading(false);
+    finally 
+    {
+      if(!Mock)setLoading(false);
     }
   }
 
