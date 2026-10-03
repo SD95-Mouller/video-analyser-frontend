@@ -37,7 +37,7 @@ export default function App() {
         return;
       }
 
-      const response = await fetch('http://127.0.0.1:8000/v1/video/analyze', {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/video/analyze', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
