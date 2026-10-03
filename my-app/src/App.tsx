@@ -8,7 +8,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
 
-  const Mock=true;
+  const Mock=false; // 设置为true以启用模拟数据
 
 
   async function handleAnalyzeVideo() 
@@ -37,7 +37,7 @@ export default function App() {
         return;
       }
 
-      const response = await fetch('http://127.0.0.1:8000/api/v1/video/analyze', {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/analyze', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
